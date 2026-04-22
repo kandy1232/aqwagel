@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aquwagel | Educational Posters & Maps</title>
+    <meta name="description" content="Discover high-quality educational posters, giant coloring sheets, and detailed maps. Perfect for schools, homes, and offices in Sri Lanka.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            900: '#0c4a6e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* Watermark Overlay Simulation */
+        .watermark-container {
+            position: relative;
+            overflow: hidden;
+        }
+        .watermark-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 2rem;
+            color: rgba(255, 255, 255, 0.4);
+            font-weight: bold;
+            pointer-events: none;
+            white-space: nowrap;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            z-index: 10;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased">
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50 border-b border-slate-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center cursor-pointer" onclick="app.router('home')">
+                    <i class="fa-solid fa-layer-group text-brand-600 text-2xl mr-2"></i>
+                    <span class="font-serif text-xl font-bold text-slate-900 tracking-tight">Aquwagel</span>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <button onclick="app.router('shop')" class="text-slate-600 hover:text-brand-600 font-medium transition">Shop All</button>
+                    <button onclick="app.filterCategory('maps')" class="text-slate-600 hover:text-brand-600 font-medium transition">Maps</button>
+                    <button onclick="app.router('giant-posters')" class="text-brand-600 font-bold transition border-b-2 border-brand-600">Giant Posters</button>
+                    <button onclick="app.router('admin')" class="ml-4 px-4 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition flex items-center gap-2">
+                        <i class="fa-solid fa-shield-halved"></i> Admin
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="flex items-center md:hidden">
+                    <button onclick="app.toggleMobileMenu()" class="text-slate-600 hover:text-slate-900 p-2">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-100 absolute w-full shadow-lg">
+            <div class="px-4 pt-2 pb-4 space-y-1">
+                <button onclick="app.router('shop')" class="block w-full text-left px-3 py-2 text-base font-medium text-slate-700 hover:bg-slate-50 rounded-md">Shop All</button>
+                <button onclick="app.filterCategory('maps')" class="block w-full text-left px-3 py-2 text-base font-medium text-slate-700 hover:bg-slate-50 rounded-md">Maps</button>
+                <button onclick="app.router('giant-posters')" class="block w-full text-left px-3 py-2 text-base font-medium text-brand-600 hover:bg-slate-50 rounded-md">Giant Posters</button>
+                <button onclick="app.router('admin')" class="block w-full text-left px-3 py-2 text-base font-medium text-slate-700 hover:bg-slate-50 rounded-md">Admin Panel</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main id="app-root" class="min-h-screen pb-20">
+        <!-- Views will be injected here by JS -->
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-300 py-12 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+                <h3 class="text-white text-lg font-bold mb-4">Aquwagel</h3>
+                <p class="text-sm text-slate-400">Premium educational posters and maps for Sri Lanka. Inspiring learning through visual art.</p>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-4">Shop</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="#" onclick="app.filterCategory('maps')" class="hover:text-white">World & SL Maps</a></li>
+                    <li><a href="#" onclick="app.filterCategory('animals')" class="hover:text-white">Animals & Insects</a></li>
+                    <li><a href="#" onclick="app.filterCategory('solar')" class="hover:text-white">Solar System</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-4">Support</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="#" class="hover:text-white">Shipping Policy</a></li>
+                    <li><a href="#" class="hover:text-white">Returns</a></li>
+                    <li><a href="#" class="hover:text-white">Contact Us</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-4">SEO & Tech</h4>
+                <p class="text-xs text-slate-500">Optimized with Schema.org, WebP, and Lazy Loading for maximum performance.</p>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 mt-8 pt-8 border-t border-slate-800 text-center text-sm text-slate-500">
+             Aquwagel Educational Posters. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- Application Logic -->
+    <script>
+        // --- Mock Data & State ---
+        const MOCK_IMAGES = [
+            { id: 1, url: 'https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=800&q=80', category: 'maps', title: 'Detailed Political Map of Sri Lanka', desc: 'High resolution political map showing districts and cities for educational use.', size: '24x36', price: 1200, isGiant: false },
+            { id: 2, url: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80', category: 'solar', title: 'Solar System Planets Alignment', desc: 'Colorful diagram of all eight planets in our solar system aligned correctly.', size: '24x36', price: 1500, isGiant: false },
+            { id: 3, url: 'https://images.unsplash.com/photo-1530210124550-912dc1381cb8?auto=format&fit=crop&w=800&q=80', category: 'anatomy', title: 'Human Body Muscular System', desc: 'Detailed anatomical chart of the human muscular system for medical students.', size: '24x36', price: 1800, isGiant: false },
+            { id: 4, url: 'https://images.unsplash.com/photo-1564349683136-77e08dba1ef7?auto=format&fit=crop&w=800&q=80', category: 'animals', title: 'Wildlife of Sri Lanka Chart', desc: 'Illustrated guide to endemic wildlife species found in the jungles of Sri Lanka.', size: '24x36', price: 1100, isGiant: false },
+            { id: 5, url: 'https://images.unsplash.com/photo-1577083552431-6e5fd01aa342?auto=format&fit=crop&w=800&q=80', category: 'maps', title: 'Vintage World Map Canvas', desc: 'Antique style world map perfect for office decor and history enthusiasts.', size: '36x48', price: 2500, isGiant: false },
+            { id: 6, url: 'https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=800&q=80', category: 'others', title: 'Educational Alphabet Chart', desc: 'Vibrant ABC chart designed for preschool and kindergarten classroom walls.', size: '24x36', price: 900, isGiant: false },
+            // Giant Posters
+            { id: 101, url: 'https://images.unsplash.com/photo-1618331835717-801e976710b2?auto=format&fit=crop&w=800&q=80', category: 'others', title: 'Giant Underwater World Coloring', desc: 'Massive interactive coloring poster featuring a detailed underwater ocean scene.', size: '3x4ft', price: 3500, isGiant: true },
+            { id: 102, url: 'https://images.unsplash.com/photo-1579762715118-a6f1d4b934f1?auto=format&fit=crop&w=800&q=80', category: 'maps', title: 'Giant Dinosaur Era Map', desc: 'Huge floor map showing the prehistoric world of dinosaurs for kids to color.', size: '6x4ft', price: 5500, isGiant: true },
+            { id: 103, url: 'https://images.unsplash.com/photo-1515462277126-2dd0c162007a?auto=format&fit=crop&w=800&q=80', category: 'others', title: 'Mega Space Adventure Coloring', desc: 'Enormous wall poster of outer space rockets and planets for group activities.', size: '10x20ft', price: 12000, isGiant: true },
+        ];
+
+        const app = {
+            state: {
+                currentView: 'home',
+                products: [...MOCK_IMAGES],
+                cart: [],
+                filter: 'all'
+            },
+
+            init() {
+                this.router('home');
+            },
+
+            toggleMobileMenu() {
+                const menu = document.getElementById('mobile-menu');
+                menu.classList.toggle('hidden');
+            },
+
+            // --- Router / View Manager ---
+            router(viewName, param = null) {
+                this.state.currentView = viewName;
+                const root = document.getElementById('app-root');
+                window.scrollTo(0, 0);
+                
+                // Close mobile menu if open
+                document.getElementById('mobile-menu').classList.add('hidden');
+
+                switch(viewName) {
+                    case 'home':
+                        root.innerHTML = this.views.home();
+                        break;
+                    case 'shop':
+                        this.state.filter = param || 'all';
+                        root.innerHTML = this.views.shop();
+                        this.renderProductGrid();
+                        break;
+                    case 'giant-posters':
+                        root.innerHTML = this.views.giantPosters();
+                        break;
+                    case 'admin':
+                        root.innerHTML = this.views.admin();
+                        this.renderAdminList();
+                        break;
+                    case 'product-detail':
+                        root.innerHTML = this.views.productDetail(param);
+                        break;
+                }
+            },
+
+            filterCategory(cat) {
+                this.router('shop', cat);
+            },
+
+            // --- SEO Helper ---
+            generateSEOSchema(product) {
+                return {
+                    "@context": "https://schema.org",
+                    "@type": "Product",
+                    "name": product.title,
+                    "image": product.url,
+                    "description": product.desc,
+                    "offers": {
+                        "@type": "Offer",
+                        "priceCurrency": "LKR",
+                        "price": product.price,
+                        "availability": "https://schema.org/InStock"
+                    }
+                };
+            },
+
+            // --- Views Templates ---
+            views: {
+                home() {
+                    return `
+                        <div class="animate-fade-in">
+                            <!-- Hero Section -->
+                            <div class="relative bg-slate-900 overflow-hidden">
+                                <div class="absolute inset-0 opacity-40">
+                                    <img src="https://images.unsplash.com/photo-1507842217121-9e962835d771?auto=format&fit=crop&w=1600&q=80" class="w-full h-full object-cover" alt="Library background">
+                                </div>
+                                <div class="relative max-w-7xl mx-auto py-24 px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center">
+                                    <h1 class="text-4xl md:text-6xl font-serif font-bold text-white mb-6 tracking-tight">
+                                        Inspire Learning with <span class="text-brand-500">Visual Art</span>
+                                    </h1>
+                                    <p class="mt-4 text-xl text-slate-200 max-w-2xl mb-8">
+                                        Premium educational posters, detailed maps, and giant coloring sheets delivered across Sri Lanka.
+                                    </p>
+                                    <div class="flex gap-4">
+                                        <button onclick="app.router('shop')" class="px-8 py-3 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-full transition transform hover:scale-105 shadow-lg">
+                                            Shop Collection
+                                        </button>
+                                        <button onclick="app.router('giant-posters')" class="px-8 py-3 bg-white hover:bg-slate-100 text-slate-900 font-bold rounded-full transition transform hover:scale-105 shadow-lg">
+                                            Giant Posters
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Trust Badges -->
+                            <div class="bg-white border-b border-slate-200">
+                                <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+                                    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                                        <div>
+                                            <i class="fa-solid fa-truck-fast text-3xl text-brand-600 mb-3"></i>
+                                            <h3 class="font-bold text-slate-900">Island-wide Delivery</h3>
+                                            <p class="text-sm text-slate-500">Fast shipping to Colombo & beyond</p>
+                                        </div>
+                                        <div>
+                                            <i class="fa-solid fa-medal text-3xl text-brand-600 mb-3"></i>
+                                            <h3 class="font-bold text-slate-900">Premium Quality</h3>
+                                            <p class="text-sm text-slate-500">High-res prints on thick paper</p>
+                                        </div>
+                                        <div>
+                                            <i class="fa-solid fa-palette text-3xl text-brand-600 mb-3"></i>
+                                            <h3 class="font-bold text-slate-900">Vibrant Colors</h3>
+                                            <p class="text-sm text-slate-500">Fade-resistant eco inks</p>
+                                        </div>
+                                        <div>
+                                            <i class="fa-solid fa-mobile-screen text-3xl text-brand-600 mb-3"></i>
+                                            <h3 class="font-bold text-slate-900">Mobile Ready</h3>
+                                            <p class="text-sm text-slate-500">Optimized for smartphone browsing</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Featured Categories -->
+                            <div class="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
+                                <h2 class="text-3xl font-serif font-bold text-slate-900 mb-8 text-center">Explore Categories</h2>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                                    ${app.components.categoryCard('maps', 'World & SL Maps', 'https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=600&q=80')}
+                                    ${app.components.categoryCard('animals', 'Animals & Insects', 'https://images.unsplash.com/photo-1564349683136-77e08dba1ef7?auto=format&fit=crop&w=600&q=80')}
+                                    ${app.components.categoryCard('solar', 'Solar System', 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80')}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                },
+
+                shop() {
+                    const categories = [
+                        { id: 'all', name: 'All Products' },
+                        { id: 'maps', name: 'Maps' },
+                        { id: 'animals', name: 'Animals' },
+                        { id: 'solar', name: 'Solar System' },
+                        { id: 'anatomy', name: 'Anatomy' },
+                        { id: 'others', name: 'Others' }
+                    ];
+
+                    return `
+                        <div class="bg-slate-50 min-h-screen animate-fade-in">
+                            <div class="bg-white shadow-sm border-b border-slate-200 sticky top-16 z-40">
+                                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+                                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                                        <h1 class="text-2xl font-serif font-bold text-slate-900">Shop Collection</h1>
+                                        <div class="flex overflow-x-auto pb-2 md:pb-0 gap-2 no-scrollbar">
+                                            ${categories.map(cat => `
+                                                <button onclick="app.filterCategory('${cat.id}')" 
+                                                    class="px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition ${app.state.filter === cat.id ? 'bg-brand-600 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}">
+                                                    ${cat.name}
+                                                </button>
+                                            `).join('')}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                                <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                                    <!-- Products injected here -->
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                },
+
+                giantPosters() {
+                    const giants = app.state.products.filter(p => p.isGiant);
+                    return `
+                        <div class="animate-fade-in">
+                            <!-- Hero -->
+                            <div class="bg-indigo-900 text-white py-16">
+                                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                                    <span class="bg-indigo-700 text-indigo-100 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-4 inline-block">New Arrival</span>
+                                    <h1 class="text-4xl md:text-6xl font-serif font-bold mb-6">Giant Coloring Posters</h1>
+                                    <p class="text-xl text-indigo-200 max-w-2xl mx-auto mb-8">
+                                        Transform your walls into a canvas. Available in massive sizes up to 10x20ft. Perfect for schools, events, and creative spaces.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Size Comparison Visual -->
+                            <div class="bg-white py-12 border-b border-slate-200">
+                                <div class="max-w-5xl mx-auto px-4">
+                                    <h2 class="text-2xl font-bold text-center mb-8">The Scale</h2>
+                                    <div class="flex flex-col md:flex-row items-end justify-center gap-8 md:gap-16">
+                                        <div class="flex flex-col items-center">
+                                            <div class="bg-slate-200 border-2 border-slate-300 w-24 h-32 flex items-center justify-center mb-2 shadow-sm">
+                                                <span class="text-xs font-bold text-slate-500">3x4 ft</span>
+                                            </div>
+                                            <span class="text-sm font-medium">Standard Giant</span>
+                                        </div>
+                                        <div class="flex flex-col items-center">
+                                            <div class="bg-slate-200 border-2 border-slate-300 w-40 h-24 flex items-center justify-center mb-2 shadow-sm">
+                                                <span class="text-xs font-bold text-slate-500">6x4 ft</span>
+                                            </div>
+                                            <span class="text-sm font-medium">Wall Size</span>
+                                        </div>
+                                        <div class="flex flex-col items-center">
+                                            <div class="bg-brand-100 border-2 border-brand-300 w-64 h-16 flex items-center justify-center mb-2 shadow-md relative">
+                                                <span class="text-xs font-bold text-brand-700">10x20 ft</span>
+                                                <div class="absolute -top-3 -right-3 bg-red-500 text-white text-[10px] px-2 py-0.5 rounded-full">HUGE</div>
+                                            </div>
+                                            <span class="text-sm font-bold text-brand-600">Event Size</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Products -->
+                            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                                    ${giants.map(product => app.components.productCard(product, true)).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                },
+
+                admin() {
+                    return `
+                        <div class="min-h-screen bg-slate-100 animate-fade-in">
+                            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                                <div class="md:flex md:items-center md:justify-between mb-8">
+                                    <div class="min-w-0 flex-1">
+                                        <h2 class="text-2xl font-bold leading-7 text-slate-900 sm:truncate sm:text-3xl sm:tracking-tight">
+                                            <i class="fa-solid fa-lock text-slate-400 mr-2"></i> Admin Dashboard
+                                        </h2>
+                                    </div>
+                                    <div class="mt-4 flex md:ml-4 md:mt-0">
+                                        <button onclick="app.simulateBulkUpload()" class="inline-flex items-center rounded-md bg-brand-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-brand-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600">
+                                            <i class="fa-solid fa-cloud-arrow-up mr-2"></i> Simulate Bulk Upload
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Stats -->
+                                <div class="grid grid-cols-1 gap-5 sm:grid-cols-3 mb-8">
+                                    <div class="overflow-hidden rounded-lg bg-white shadow">
+                                        <div class="p-5">
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0">
+                                                    <i class="fa-solid fa-images text-3xl text-slate-400"></i>
+                                                </div>
+                                                <div class="ml-5 w-0 flex-1">
+                                                    <dl>
+                                                        <dt class="truncate text-sm font-medium text-slate-500">Total Images</dt>
+                                                        <dd class="text-3xl font-semibold text-slate-900">${app.state.products.length}</dd>
+                                                    </dl>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="overflow-hidden rounded-lg bg-white shadow">
+                                        <div class="p-5">
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0">
+                                                    <i class="fa-solid fa-file-shield text-3xl text-green-400"></i>
+                                                </div>
+                                                <div class="ml-5 w-0 flex-1">
+                                                    <dl>
+                                                        <dt class="truncate text-sm font-medium text-slate-500">Watermarked</dt>
+                                                        <dd class="text-3xl font-semibold text-slate-900">100%</dd>
+                                                    </dl>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="overflow-hidden rounded-lg bg-white shadow">
+                                        <div class="p-5">
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0">
+                                                    <i class="fa-solid fa-tags text-3xl text-blue-400"></i>
+                                                </div>
+                                                <div class="ml-5 w-0 flex-1">
+                                                    <dl>
+                                                        <dt class="truncate text-sm font-medium text-slate-500">SEO Tags</dt>
+                                                        <dd class="text-3xl font-semibold text-slate-900">Active</dd>
+                                                    </dl>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Add/Edit Form -->
+                                <div class="bg-white shadow sm:rounded-lg mb-8 overflow-hidden">
+                                    <div class="px-4 py-5 sm:p-6">
+                                        <h3 class="text-base font-semibold leading-6 text-slate-900 mb-4">Add / Edit Product</h3>
+                                        <form onsubmit="event.preventDefault(); app.handleAdminSubmit();" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                            <div>
+                                                <label class="block text-sm font-medium text-slate-700">Title</label>
+                                                <input type="text" id="admin-title" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-brand-500 focus:ring-brand-500 sm:text-sm p-2 border" placeholder="Product Title">
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-slate-700">Category</label>
+                                                <select id="admin-category" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-brand-500 focus:ring-brand-500 sm:text-sm p-2 border">
+                                                    <option value="maps">Maps</option>
+                                                    <option value="animals">Animals</option>
+                                                    <option value="solar">Solar System</option>
+                                                    <option value="anatomy">Anatomy</option>
+                                                    <option value="others">Others</option>
+                                                </select>
+                                            </div>
+                                            <div class="md:col-span-2">
+                                                <label class="block text-sm font-medium text-slate-700">
+                                                    Description (Min 12 Words for SEO)
+                                                    <span id="word-count" class="text-xs text-red-500 ml-2">0 words</span>
+                                                </label>
+                                                <textarea id="admin-desc" rows="3" oninput="app.validateWords()" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-brand-500 focus:ring-brand-500 sm:text-sm p-2 border" placeholder="Enter a rich description..."></textarea>
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-slate-700">Price (LKR)</label>
+                                                <input type="number" id="admin-price" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-brand-500 focus:ring-brand-500 sm:text-sm p-2 border">
+                                            </div>
+                                            <div class="flex items-center mt-6">
+                                                <input id="admin-giant" type="checkbox" class="h-4 w-4 rounded border-slate-300 text-brand-600 focus:ring-brand-600">
+                                                <label for="admin-giant" class="ml-2 block text-sm text-slate-900">Is Giant Poster?</label>
+                                            </div>
+                                            <div class="md:col-span-2">
+                                                <button type="submit" class="w-full md:w-auto inline-flex justify-center rounded-md bg-slate-900 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900">
+                                                    Save Product
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <!-- Product List -->
+                                <div class="bg-white shadow sm:rounded-lg">
+                                    <div class="px-4 py-5 sm:p-6">
+                                        <h3 class="text-base font-semibold leading-6 text-slate-900 mb-4">Manage Inventory</h3>
+                                        <div class="overflow-x-auto">
+                                            <table class="min-w-full divide-y divide-slate-300">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-slate-900 sm:pl-0">Image</th>
+                                                        <th class="px-3 py-3.5 text-left text-sm font-semibold text-slate-900">Details</th>
+                                                        <th class="px-3 py-3.5 text-left text-sm font-semibold text-slate-900">SEO Status</th>
+                                                        <th class="relative py-3.5 pl-3 pr-4 sm:pr-0">Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="admin-table-body" class="divide-y divide-slate-200">
+                                                    <!-- Rows injected here -->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                },
+
+                productDetail(product) {
+                    const schema = app.generateSEOSchema(product);
+                    return `
+                        <div class="animate-fade-in">
+                            <!-- JSON-LD Schema -->
+                            <script type="application/ld+json">
+                                ${JSON.stringify(schema)}
+                            <\/script>
+
+                            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                                <button onclick="app.router('shop')" class="mb-6 text-slate-500 hover:text-slate-900 flex items-center gap-2">
+                                    <i class="fa-solid fa-arrow-left"></i> Back to Shop
+                                </button>
+                                
+                                <div class="lg:grid lg:grid-cols-2 lg:gap-x-12 lg:items-start">
+                                    <!-- Image -->
+                                    <div class="flex flex-col-reverse">
+                                        <div class="w-full aspect-w-1 aspect-h-1 bg-slate-100 rounded-2xl overflow-hidden shadow-lg relative group">
+                                            <div class="watermark-container w-full h-full">
+                                                <img src="${product.url}" alt="${product.title}" class="w-full h-full object-center object-cover group-hover:scale-105 transition duration-500">
+                                                <div class="watermark-overlay">Aquwagel</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Info -->
+                                    <div class="mt-10 px-4 sm:px-0 sm:mt-16 lg:mt-0">
+                                        <h1 class="text-3xl font-serif font-bold tracking-tight text-slate-900">${product.title}</h1>
+                                        
+                                        <div class="mt-3">
+                                            <p class="text-3xl tracking-tight text-brand-600 font-bold">LKR ${product.price}</p>
+                                        </div>
+
+                                        <div class="mt-6">
+                                            <h3 class="sr-only">Description</h3>
+                                            <div class="text-base text-slate-700 space-y-6">
+                                                <p>${product.desc}</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-8 border-t border-slate-200 pt-8">
+                                            <div class="flex flex-col gap-4">
+                                                <div class="flex items-center gap-2 text-sm text-slate-600">
+                                                    <i class="fa-solid fa-ruler-combined"></i> Size: <span class="font-bold text-slate-900">${product.size}</span>
+                                                </div>
+                                                <div class="flex items-center gap-2 text-sm text-slate-600">
+                                                    <i class="fa-solid fa-layer-group"></i> Category: <span class="font-bold text-slate-900 capitalize">${product.category}</span>
+                                                </div>
+                                                <button class="mt-4 w-full bg-brand-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500">
+                                                    Add to Cart
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+            },
+
+            // --- Components ---
+            components: {
+                categoryCard(cat, title, img) {
+                    return `
+                        <div onclick="app.filterCategory('${cat}')" class="group relative cursor-pointer overflow-hidden rounded-xl shadow-lg aspect-[4/3]">
+                            <img src="${img}" alt="${title}" class="h-full w-full object-cover transition duration-300 group-hover:scale-110">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6">
+                                <h3 class="text-xl font-bold text-white">${title}</h3>
+                            </div>
+                        </div>
+                    `;
+                },
+
+                productCard(product, isGiantView = false) {
+                    return `
+                        <div class="group relative bg-white border border-slate-200 rounded-xl overflow-hidden hover:shadow-xl transition duration-300 card-hover flex flex-col h-full">
+                            <div class="aspect-[4/3] w-full overflow-hidden bg-slate-200 relative">
+                                <div class="watermark-container w-full h-full">
+                                    <img src="${product.url}" alt="${product.title}" loading="lazy" class="h-full w-full object-cover object-center group-hover:scale-105 transition duration-500">
+                                    <div class="watermark-overlay">Aquwagel</div>
+                                </div>
+                                ${product.isGiant ? '<span class="absolute top-2 right-2 bg-brand-600 text-white text-xs font-bold px-2 py-1 rounded">GIANT</span>' : ''}
+                            </div>
+                            <div class="p-4 flex flex-col flex-grow">
+                                <h3 class="text-lg font-bold text-slate-900 mb-1">
+                                    <a href="#" onclick="app.router('product-detail', app.state.products.find(p => p.id === ${product.id}))">
+                                        <span aria-hidden="true" class="absolute inset-0"></span>
+                                        ${product.title}
+                                    </a>
+                                </h3>
+                                <p class="text-sm text-slate-500 line-clamp-2 mb-4 flex-grow">${product.desc}</p>
+                                <div class="flex items-center justify-between mt-auto pt-4 border-t border-slate-100">
+                                    <p class="text-lg font-bold text-brand-600">LKR ${product.price}</p>
+                                    <button class="text-slate-400 hover:text-brand-600 transition">
+                                        <i class="fa-solid fa-cart-plus text-xl"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+            },
+
+            // --- Logic Functions ---
+            renderProductGrid() {
+                const grid = document.getElementById('product-grid');
+                if (!grid) return;
+                
+                const filtered = this.state.filter === 'all' 
+                    ? this.state.products 
+                    : this.state.products.filter(p => p.category === this.state.filter);
+
+                if (filtered.length === 0) {
+                    grid.innerHTML = `<div class="col-span-full text-center py-12 text-slate-500">No products found in this category.</div>`;
+                    return;
+                }
+
+                grid.innerHTML = filtered.map(p => this.components.productCard(p)).join('');
+            },
+
+            renderAdminList() {
+                const tbody = document.getElementById('admin-table-body');
+                if (!tbody) return;
+
+                tbody.innerHTML = this.state.products.map(p => {
+                    const wordCount = p.desc.split(' ').length;
+                    const isValid = wordCount >= 12;
+                    return `
+                        <tr>
+                            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-slate-900 sm:pl-0">
+                                <img src="${p.url}" class="h-12 w-12 rounded object-cover" alt="thumb">
+                            </td>
+                            <td class="whitespace-nowrap px-3 py-4 text-sm text-slate-500">
+                                <div class="font-bold text-slate-900">${p.title}</div>
+                                <div class="text-xs">LKR ${p.price}</div>
+                            </td>
+                            <td class="whitespace-nowrap px-3 py-4 text-sm">
+                                <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ${isValid ? 'bg-green-50 text-green-700 ring-1 ring-inset ring-green-600/20' : 'bg-red-50 text-red-700 ring-1 ring-inset ring-red-600/20'}">
+                                    ${wordCount} Words ${isValid ? '✓' : '✗'}
+                                </span>
+                            </td>
+                            <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+                                <button onclick="app.deleteProduct(${p.id})" class="text-red-600 hover:text-red-900">Delete</button>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+            },
+
+            validateWords() {
+                const desc = document.getElementById('admin-desc').value;
+                const count = desc.trim().split(/\s+/).filter(w => w.length > 0).length;
+                const badge = document.getElementById('word-count');
+                badge.innerText = `${count} words`;
+                badge.className = count >= 12 ? 'text-xs text-green-600 ml-2 font-bold' : 'text-xs text-red-500 ml-2 font-bold';
+            },
+
+            handleAdminSubmit() {
+                const title = document.getElementById('admin-title').value;
+                const category = document.getElementById('admin-category').value;
+                const desc = document.getElementById('admin-desc').value;
+                const price = document.getElementById('admin-price').value;
+                const isGiant = document.getElementById('admin-giant').checked;
+
+                if (!title || !desc || !price) {
+                    alert("Please fill all fields");
+                    return;
+                }
+
+                if (desc.trim().split(/\s+/).length < 12) {
+                    alert("Description must be at least 12 words for SEO.");
+                    return;
+                }
+
+                const newProduct = {
+                    id: Date.now(),
+                    url: `https://source.unsplash.com/random/800x600?${category}&sig=${Date.now()}`, // Mock image
+                    category,
+                    title,
+                    desc,
+                    size: isGiant ? '3x4ft' : '24x36',
+                    price,
+                    isGiant
+                };
+
+                this.state.products.unshift(newProduct);
+                this.renderAdminList();
+                
+                // Reset form
+                document.getElementById('admin-title').value = '';
+                document.getElementById('admin-desc').value = '';
+                document.getElementById('admin-price').value = '';
+                this.validateWords();
+            },
+
+            deleteProduct(id) {
+                if(confirm('Are you sure you want to delete this item?')) {
+                    this.state.products = this.state.products.filter(p => p.id !== id);
+                    this.renderAdminList();
+                }
+            },
+
+            simulateBulkUpload() {
+                const btn = document.querySelector('button[onclick="app.simulateBulkUpload()"]');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Processing...';
+                btn.disabled = true;
+
+                setTimeout(() => {
+                    // Simulate adding 3 new random products
+                    const categories = ['maps', 'animals', 'solar', 'anatomy', 'others'];
+                    for(let i=0; i<3; i++) {
+                        const cat = categories[Math.floor(Math.random() * categories.length)];
+                        this.state.products.unshift({
+                            id: Date.now() + i,
+                            url: `https://source.unsplash.com/random/800x600?${cat}&sig=${Date.now()+i}`,
+                            category: cat,
+                            title: `Bulk Upload Item ${Math.floor(Math.random() * 1000)}`,
+                            desc: `This is a bulk uploaded item description that meets the minimum word count requirement for SEO purposes.`,
+                            size: '24x36',
+                            price: Math.floor(Math.random() * 2000) + 500,
+                            isGiant: false
+                        });
+                    }
+                    this.renderAdminList();
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                    alert("Bulk upload complete! Watermarks applied automatically.");
+                }, 1500);
+            }
+        };
+
+        // Initialize App
+        document.addEventListener('DOMContentLoaded', () => {
+            app.init();
+        });
+    </script>
+</body>
+</html>
